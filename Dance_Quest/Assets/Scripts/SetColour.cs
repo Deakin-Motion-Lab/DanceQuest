@@ -15,18 +15,20 @@ namespace DanceQuest
         public GameObject rightHand;
         private bool _ColourUpdated;
 
+        private void Awake()
+        {
+            _Colours = new Color[4];                    // Currently set to 4 players
+            _Colours[0] = new Color(1f, 0.5f, 0.1f);    // Orange
+            _Colours[1] = Color.red;
+            _Colours[2] = Color.yellow;
+            _Colours[3] = Color.white;                  // Observer  TBC: could set to black / hide mesh?
+
+            index = 0;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            _Colours = new Color[4];                // Currently set to 4 players
-            //_Colours[0] = new Color(255, 128, 128);
-            _Colours[0] = Color.magenta;
-            _Colours[1] = Color.red;
-            _Colours[2] = Color.yellow;
-            _Colours[3] = Color.white;              // Observer  TBC: could set to black / hide mesh?
-
-            index = 0;
-
             if (photonView.IsMine)
             {
                 photonView.RPC("ChangeMyColour", RpcTarget.AllBuffered, photonView.OwnerActorNr - 1);
@@ -49,12 +51,6 @@ namespace DanceQuest
             //        }
             //    }
             //}
-
-            if (!_ColourUpdated)
-            {
-                photonView.RPC("ChangeMyColour", RpcTarget.AllBuffered, photonView.OwnerActorNr - 1);
-                _ColourUpdated = true;
-            }
         }
 
         [PunRPC]
