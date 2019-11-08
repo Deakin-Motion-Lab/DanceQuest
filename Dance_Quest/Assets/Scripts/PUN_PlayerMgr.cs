@@ -48,9 +48,6 @@ namespace DanceQuest
         private SkinnedMeshRenderer _handMeshLeft;
         private SkinnedMeshRenderer _handMeshRight;
 
-        // Scene Elements
-        private MeshRenderer _DanceFloor;
-
         #endregion
 
 
@@ -71,7 +68,6 @@ namespace DanceQuest
                 localVRHeadset = GameObject.Find("CenterEyeAnchor").transform;                 // Get transform data from local VR Headset
                 localVRControllerLeft = GameObject.Find("CustomHandLeft").transform;
                 localVRControllerRight = GameObject.Find("CustomHandRight").transform;
-                _DanceFloor = GameObject.FindWithTag("Dance Floor").GetComponent<MeshRenderer>();
                 _handMeshLeft = GameObject.Find("hands:Lhand").GetComponent<SkinnedMeshRenderer>();
                 _handMeshRight = GameObject.Find("hands:Rhand").GetComponent<SkinnedMeshRenderer>();
 
@@ -87,16 +83,6 @@ namespace DanceQuest
             // Don't Destroy on load to prevent player from being destroyed when another player joins / leaves the room
             DontDestroyOnLoad(gameObject);
         }
-
-        //private void Start()
-        //{
-        //    if (photonView.IsMine && PhotonNetwork.IsMasterClient)
-        //    {
-        //            _DanceFloor.enabled = false;             // Master Client does not see dance floor
-        //            LeftHand.SetActive(false);
-        //            RightHand.SetActive(false);
-        //    }
-        //}
 
         // Update each frame
         private void Update()

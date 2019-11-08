@@ -8,6 +8,8 @@ namespace DanceQuest
     public class PUN_Launcher : MonoBehaviourPunCallbacks
     {
         #region Private and Public Attributes
+        public const string ROOM_NAME = "Dance_Scene";
+
         private string _GameVersion = "1";       // Set to 1 by default, unless we need to make breaking changes on a project that is Live.
 
         [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
@@ -17,10 +19,6 @@ namespace DanceQuest
         private Text _InstructionText;
         [SerializeField]
         private Text _ConnectionText;
-
-        //[Tooltip("The UI 'connect' button to enable the user to connect")]
-        //[SerializeField]
-        //private GameObject connectButton;
 
         private bool isConnecting;
 
@@ -77,7 +75,6 @@ namespace DanceQuest
                 // Critical
                 // Connect to the Photon Network (server) 
                 PhotonNetwork.GameVersion = _GameVersion;
-                PhotonNetwork.NickName = NetworkPlayerSettings.NickName;        // Assign a nickname to ID player in room
                 PhotonNetwork.ConnectUsingSettings();                           // Set on PhotonServerSettings in unity editor
             }
         }
@@ -132,7 +129,7 @@ namespace DanceQuest
 
                 // Critical
                 // Load the Room Level.
-                PhotonNetwork.LoadLevel(PUN_RoomMgr.ROOM_NAME);
+                PhotonNetwork.LoadLevel(ROOM_NAME);
             }
         }
         #endregion
