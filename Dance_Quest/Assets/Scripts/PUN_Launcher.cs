@@ -46,6 +46,14 @@ namespace DanceQuest
             {
                 Connect();
             }
+            else if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick) || OVRInput.GetDown(OVRInput.Button.SecondaryThumbstick))
+            {
+                Connect();
+            }
+            else if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) || OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger) || OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+            {
+                Connect();
+            }
         }
 
         /// <summary>

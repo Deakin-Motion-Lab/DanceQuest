@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 namespace DanceQuest
 {
-    public class SetColour : MonoBehaviourPunCallbacks
+    public class SetColour : MonoBehaviourPun
     {
         // Public attributes
         public GameObject head;
