@@ -2,7 +2,7 @@
 using Photon.Pun;
 using System.Collections.Generic;
 
-namespace DanceQuest
+namespace VirtualNowQuest
 {
     /// <summary>
     /// This class managers the local player's instance over the PUN network, sending the Transform data of the local player's VR hardware to other
@@ -47,11 +47,7 @@ namespace DanceQuest
         public GameObject _OVRRighthand;
         private SkinnedMeshRenderer _handMeshLeft;
         private SkinnedMeshRenderer _handMeshRight;
-
-
-        private MeshRenderer _Floor;
         #endregion
-
 
         private void Awake()
         {
@@ -85,11 +81,7 @@ namespace DanceQuest
             // Don't Destroy on load to prevent player from being destroyed when another player joins / leaves the room
             DontDestroyOnLoad(gameObject);
         }
-
-        private void Start()
-        {
-            _Floor = GameObject.FindGameObjectWithTag("Dance Floor").GetComponent<MeshRenderer>();
-        }
+        
 
         // Update each frame
         private void Update()
@@ -105,15 +97,6 @@ namespace DanceQuest
 
                 //    PUN_RoomMgr.LeaveRoom();
                 //}
-
-                if (OVRInput.GetDown(OVRInput.Button.One))
-                {
-                    _Floor.enabled = false;
-                }
-                if (OVRInput.GetDown(OVRInput.Button.Two))
-                {
-                    _Floor.enabled = true;
-                }
 
                 // Animate "saber" hands
                 LeftHand.transform.position = localVRControllerLeft.position;
