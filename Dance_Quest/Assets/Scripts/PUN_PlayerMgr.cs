@@ -48,9 +48,8 @@ namespace DanceQuest
         private SkinnedMeshRenderer _handMeshLeft;
         private SkinnedMeshRenderer _handMeshRight;
 
-        // Scene Elements
-        private MeshRenderer _DanceFloor;
 
+        private MeshRenderer _Floor;
         #endregion
 
 
@@ -71,7 +70,6 @@ namespace DanceQuest
                 localVRHeadset = GameObject.Find("CenterEyeAnchor").transform;                 // Get transform data from local VR Headset
                 localVRControllerLeft = GameObject.Find("CustomHandLeft").transform;
                 localVRControllerRight = GameObject.Find("CustomHandRight").transform;
-                _DanceFloor = GameObject.FindWithTag("Dance Floor").GetComponent<MeshRenderer>();
                 _handMeshLeft = GameObject.Find("hands:Lhand").GetComponent<SkinnedMeshRenderer>();
                 _handMeshRight = GameObject.Find("hands:Rhand").GetComponent<SkinnedMeshRenderer>();
 
@@ -88,15 +86,10 @@ namespace DanceQuest
             DontDestroyOnLoad(gameObject);
         }
 
-        //private void Start()
-        //{
-        //    if (photonView.IsMine && PhotonNetwork.IsMasterClient)
-        //    {
-        //            _DanceFloor.enabled = false;             // Master Client does not see dance floor
-        //            LeftHand.SetActive(false);
-        //            RightHand.SetActive(false);
-        //    }
-        //}
+        private void Start()
+        {
+            _Floor = GameObject.FindGameObjectWithTag("Dance Floor").GetComponent<MeshRenderer>();
+        }
 
         // Update each frame
         private void Update()
@@ -112,6 +105,15 @@ namespace DanceQuest
 
                 //    PUN_RoomMgr.LeaveRoom();
                 //}
+
+                if (OVRInput.GetDown(OVRInput.Button.One))
+                {
+                    _Floor.enabled = false;
+                }
+                if (OVRInput.GetDown(OVRInput.Button.Two))
+                {
+                    _Floor.enabled = true;
+                }
 
                 // Animate "saber" hands
                 LeftHand.transform.position = localVRControllerLeft.position;

@@ -7,10 +7,9 @@ namespace DanceQuest
 {
     public class PUN_RoomMgr : MonoBehaviourPunCallbacks
     {
-        public const string ROOM_NAME = "Dance_Scene";
-
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
+        [Tooltip("The player's spawn location in the scene")]
         public Transform spawnPoint;
 
         #region Photon Callbacks
@@ -88,7 +87,7 @@ namespace DanceQuest
             }
 
             Debug.LogFormat("PhotonNetwork: Loading Level {0}", PhotonNetwork.CurrentRoom);
-            PhotonNetwork.LoadLevel(ROOM_NAME);
+            PhotonNetwork.LoadLevel(PUN_Launcher.ROOM_NAME);
         }
         #endregion
     }
