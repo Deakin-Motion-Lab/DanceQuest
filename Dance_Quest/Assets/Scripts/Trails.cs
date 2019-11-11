@@ -7,8 +7,8 @@ namespace DanceQuest
     {
         public GameObject trailPrefab;
 
-        private const float _INTERVAL = 0.01f;
-        private const int _MAXTRAILS = 15;
+        private const float _INTERVAL = 0.01f; // was 0.01f
+        private const int _MAXTRAILS = 20;      // was 15
         private float _ElapsedTime;
         private Queue _TrailsQueue;
         private Color parentColour;

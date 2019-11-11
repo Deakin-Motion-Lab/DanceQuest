@@ -8,7 +8,7 @@ namespace DanceQuest
         private float _Alpha;
         private float _Red;
         private Material myMaterial;
-        private const float _ALPHA_VALUE = 0.1f;
+        private const float _ALPHA_VALUE = 0.1f;    
 
 
         public void Start()

@@ -413,7 +413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ' Deakin CUBE presents...'
+  m_Text: ' Deakin CUBE presents..."Virtual Now"'
 --- !u!222 &532627961
 CanvasRenderer:
   m_ObjectHideFlags: 0
