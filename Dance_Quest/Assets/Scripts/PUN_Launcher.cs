@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-namespace DanceQuest
+namespace VirtualNowQuest
 {
     public class PUN_Launcher : MonoBehaviourPunCallbacks
     {

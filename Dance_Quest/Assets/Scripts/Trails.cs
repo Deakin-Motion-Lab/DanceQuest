@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace DanceQuest
+namespace VirtualNowQuest
 {
+    /// <summary>
+    /// This class is responsible for generating "trails" for each player's arm
+    /// </summary>
     public class Trails : MonoBehaviour
     {
-        public GameObject trailPrefab;
+        private const float _INTERVAL = 0.01f; 
+        private const int _MAXTRAILS = 20;          // NOTE: Too many trails impacts performance
 
-        private const float _INTERVAL = 0.01f; // was 0.01f
-        private const int _MAXTRAILS = 20;      // was 15
+        public GameObject trailPrefab;
         private float _ElapsedTime;
         private Queue _TrailsQueue;
         private Color parentColour;
@@ -28,19 +31,23 @@ namespace DanceQuest
 
             if (_ElapsedTime >= _INTERVAL)
             {
-                GameObject tmp = Instantiate(trailPrefab, transform);       // TBC: May need PhotonNetwork.Instantiate for networking
+                // Instantiate trail game object (prefab)
+                GameObject tmp = Instantiate(trailPrefab, transform);       
                 tmp.transform.localScale = new Vector3(1f, 1f, 1f);
                 tmp.transform.localPosition = Vector3.zero;
                 tmp.transform.localRotation = Quaternion.identity;
                 tmp.SetActive(true);
                 tmp.GetComponent<MeshRenderer>().material.color = parentColour;
                 tmp.transform.SetParent(null);
+
+                // Place into queue and reset timer
                 _TrailsQueue.Enqueue(tmp);
                 _ElapsedTime = 0f;
             }
 
             if (_TrailsQueue.Count == _MAXTRAILS)
             {
+                // Remove FIFO object from queue and destroy
                 GameObject tmp = _TrailsQueue.Dequeue() as GameObject;
                 Destroy(tmp);
             }

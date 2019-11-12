@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 
-namespace DanceQuest
+namespace VirtualNowQuest
 {
+    /// <summary>
+    /// This class is responsible for setting individual player colours and sending out an RPC call to all other players on the network
+    /// </summary>
     public class SetColour : MonoBehaviourPun
     {
         // Public attributes
@@ -16,7 +16,6 @@ namespace DanceQuest
         // Private attributes
         private Color[] _Colours;
         //private int index;
-        private MeshRenderer _Floor;
 
         private void Awake()
         {
@@ -25,7 +24,6 @@ namespace DanceQuest
             _Colours[1] = Color.red;
             _Colours[2] = Color.yellow;
             _Colours[3] = Color.white;                  // Observer  TBC: toggle floor on / off
-
             //index = 0;
         }
 
