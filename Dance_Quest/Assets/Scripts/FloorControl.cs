@@ -26,16 +26,16 @@ namespace VirtualNowQuest
             if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick) || OVRInput.GetDown(OVRInput.Button.SecondaryThumbstick))
             {
                 _Toggle = !_Toggle;
-                ToggleFloor();
+                ToggleFloor(_Toggle);
             }
         }
 
         /// <summary>
         /// Toggles the floor game object on / off
         /// </summary>
-        private void ToggleFloor()
+        public void ToggleFloor(bool toggle)
         {
-            floor.enabled = _Toggle;
+            floor.enabled = toggle;
         }
     }
 }

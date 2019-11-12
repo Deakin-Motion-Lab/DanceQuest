@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Photon.Pun;
-using System.Collections.Generic;
 
 namespace VirtualNowQuest
 {
@@ -13,6 +12,9 @@ namespace VirtualNowQuest
         #region Public and Private Attributes
         [Tooltip("The local player instance. Use this to know if local player is represented in the scene")]
         public static GameObject LocalPlayerInstance;
+        private const float _MAX_TIME = 2.0f;
+        private float _ElapsedTime;
+        private FloorControl _Floor;
 
         // VR Avatar Elements
         [Header("Player Avatar (Displayed to other networked players):")]
@@ -51,11 +53,10 @@ namespace VirtualNowQuest
 
         private void Awake()
         {
-            // Important:
-            // used in RoomManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronised
             if (photonView.IsMine)
             {
-                //PopulateDictionary();
+                // Important:
+                // used in RoomManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronised
                 LocalPlayerInstance = gameObject;
 
                 // Enable Oculus Camera and controllers for local player
@@ -75,28 +76,41 @@ namespace VirtualNowQuest
                 Head.SetActive(false);
                 LeftHand.SetActive(true);
                 RightHand.SetActive(true);
+
+                _Floor = GetComponent<FloorControl>();
             }
 
             // Critical
             // Don't Destroy on load to prevent player from being destroyed when another player joins / leaves the room
             DontDestroyOnLoad(gameObject);
         }
-        
+
+        private void Start()
+        {
+            _ElapsedTime = 0f;
+        }
+
 
         // Update each frame
         private void Update()
         {
             if (photonView.IsMine)
             {
-                //if (OVRInput.GetDown(OVRInput.Button.One))      // GetDown = Pressed this frame, Button.One = 'A'
-                //{
-                //    // Disable Oculus Camera and controllers for local player
-                //    _OVRCameraRig.SetActive(false);
-                //    _OVRLefthand.SetActive(false);
-                //    _OVRRighthand.SetActive(false);
+                if (OVRInput.Get(OVRInput.Button.One))      // GetDown = Pressed this frame, Button.One = 'A'
+                {
+                    _ElapsedTime += Time.deltaTime;
 
-                //    PUN_RoomMgr.LeaveRoom();
-                //}
+                    if (_ElapsedTime >= _MAX_TIME)
+                    {
+                        // Disable Oculus Camera and controllers for local player
+                        _OVRCameraRig.SetActive(false);
+                        _OVRLefthand.SetActive(false);
+                        _OVRRighthand.SetActive(false);
+                        _Floor.ToggleFloor(false);
+
+                        PUN_RoomMgr.LeaveRoom();
+                    }
+                }
 
                 // Animate "saber" hands
                 LeftHand.transform.position = localVRControllerLeft.position;
@@ -145,7 +159,7 @@ namespace VirtualNowQuest
         {
             if (stream.IsWriting)
             {
-                // Send local VR Headset position and rotation data to networked player
+                // Send local VR Headset position and rotation data to other networked players
                 stream.SendNext(localVRHeadset.position);
                 stream.SendNext(localVRHeadset.rotation);
                 stream.SendNext(localVRControllerLeft.position);
@@ -155,7 +169,7 @@ namespace VirtualNowQuest
             }
             else if (stream.IsReading)
             {
-                // Receive networked player's VR Headset position and rotation data
+                // Receive other networked players' VR Headset position and rotation data
                 correctPlayerHeadPosition = (Vector3)stream.ReceiveNext();
                 correctPlayerHeadRotation = (Quaternion)stream.ReceiveNext();
                 correctPlayerLeftHandPosition = (Vector3)stream.ReceiveNext();
