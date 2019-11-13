@@ -47,8 +47,8 @@ namespace VirtualNowQuest
         public GameObject _OVRLefthand;
         [Tooltip("Right Hand Controller")]
         public GameObject _OVRRighthand;
-        private SkinnedMeshRenderer _handMeshLeft;
-        private SkinnedMeshRenderer _handMeshRight;
+        private SkinnedMeshRenderer _HandMeshLeft;
+        private SkinnedMeshRenderer _HandMeshRight;
         #endregion
 
         private void Awake()
@@ -67,12 +67,12 @@ namespace VirtualNowQuest
                 localVRHeadset = GameObject.Find("CenterEyeAnchor").transform;                 // Get transform data from local VR Headset
                 localVRControllerLeft = GameObject.Find("CustomHandLeft").transform;
                 localVRControllerRight = GameObject.Find("CustomHandRight").transform;
-                _handMeshLeft = GameObject.Find("hands:Lhand").GetComponent<SkinnedMeshRenderer>();
-                _handMeshRight = GameObject.Find("hands:Rhand").GetComponent<SkinnedMeshRenderer>();
+                _HandMeshLeft = GameObject.Find("hands:Lhand").GetComponent<SkinnedMeshRenderer>();
+                _HandMeshRight = GameObject.Find("hands:Rhand").GetComponent<SkinnedMeshRenderer>();
 
                 // Don't display our own "player" avatar to ourselves 
-                _handMeshLeft.enabled = false;
-                _handMeshRight.enabled = false;
+                _HandMeshLeft.enabled = false;
+                _HandMeshRight.enabled = false;
                 Head.SetActive(false);
                 LeftHand.SetActive(true);
                 RightHand.SetActive(true);

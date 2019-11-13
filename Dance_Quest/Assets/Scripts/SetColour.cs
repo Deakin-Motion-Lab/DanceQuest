@@ -15,7 +15,7 @@ namespace VirtualNowQuest
         
         // Private attributes
         private Color[] _Colours;
-        //private int index;
+        private int index;
 
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace VirtualNowQuest
             _Colours[1] = Color.red;
             _Colours[2] = Color.yellow;
             _Colours[3] = Color.white;                  // Observer  TBC: toggle floor on / off
-            //index = 0;
+            
         }
 
         // Start is called before the first frame update
@@ -32,27 +32,29 @@ namespace VirtualNowQuest
         {
             if (photonView.IsMine)
             {
-                photonView.RPC("ChangeMyColour", RpcTarget.AllBuffered, photonView.OwnerActorNr - 1);
+                index = photonView.OwnerActorNr - 1;
+                photonView.RPC("ChangeMyColour", RpcTarget.AllBuffered, index);
             }
         }
 
         // Update is called once per frame
         void Update()
         {
-            //// Allow networked players to select their own colours from the array
-            //if (photonView.IsMine)
-            //{
-            //    if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstickUp) || OVRInput.GetDown(OVRInput.Button.PrimaryThumbstickDown))
-            //    {
-            //        photonView.RPC("ChangeMyColour", RpcTarget.AllBuffered, index);
-            //        index++;
+            // Allow networked players to select their own colours from the array
+            if (photonView.IsMine)
+            {
+                if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+                {
+                    index++;
 
-            //        if (index == _Colours.Length)
-            //        {
-            //            index = 0;
-            //        }
-            //    }
-            //}
+                    if (index == _Colours.Length)
+                    {
+                        index = 0;
+                    }
+
+                    photonView.RPC("ChangeMyColour", RpcTarget.AllBuffered, index);
+                }
+            }
         }
 
         [PunRPC]

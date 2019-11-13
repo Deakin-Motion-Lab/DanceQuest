@@ -7,10 +7,12 @@ namespace VirtualNowQuest
 {
     public class PUN_RoomMgr : MonoBehaviourPunCallbacks
     {
+        #region Public Attributes
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
         [Tooltip("The player's spawn location in the scene")]
         public Transform spawnPoint;
+        #endregion
 
         #region Photon Callbacks
         /// <summary>
