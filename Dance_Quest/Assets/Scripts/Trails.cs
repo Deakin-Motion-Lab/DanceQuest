@@ -8,20 +8,23 @@ namespace VirtualNowQuest
     /// </summary>
     public class Trails : MonoBehaviour
     {
-        private const float _INTERVAL = 0.01f; 
-        private const int _MAXTRAILS = 20;          // NOTE: Too many trails impacts performance
-
+        [Tooltip("Delay between each trail element spawning (seconds)")]
+        public float interval = 0.01f;         // Default value for arms     
+        [Tooltip("Total number of trail elements (higher values increase trail length)\nNOTE: Too many trails impacts performance")]
+        public int maximumTrails = 20;             // Default value for arms [NOTE: Too many trails impacts performance]
+        [Tooltip("Trail object, typically a copy of the main object")]
         public GameObject trailPrefab;
+
         private float _ElapsedTime;
         private Queue _TrailsQueue;
-        private Color parentColour;
+        private Color _ParentColour;
 
         // Start is called before the first frame update
         void Start()
         {
             _ElapsedTime = 0f;
             _TrailsQueue = new Queue();
-            parentColour = GetComponent<MeshRenderer>().material.color;
+            _ParentColour = GetComponent<MeshRenderer>().material.color;
         }
 
         // Update is called once per frame
@@ -29,7 +32,7 @@ namespace VirtualNowQuest
         {
             _ElapsedTime += Time.deltaTime;
 
-            if (_ElapsedTime >= _INTERVAL)
+            if (_ElapsedTime >= interval)
             {
                 // Instantiate trail game object (prefab)
                 GameObject tmp = Instantiate(trailPrefab, transform);       
@@ -37,7 +40,7 @@ namespace VirtualNowQuest
                 tmp.transform.localPosition = Vector3.zero;
                 tmp.transform.localRotation = Quaternion.identity;
                 tmp.SetActive(true);
-                tmp.GetComponent<MeshRenderer>().material.color = parentColour;
+                tmp.GetComponent<MeshRenderer>().material.color = _ParentColour;
                 tmp.transform.SetParent(null);
 
                 // Place into queue and reset timer
@@ -45,7 +48,7 @@ namespace VirtualNowQuest
                 _ElapsedTime = 0f;
             }
 
-            if (_TrailsQueue.Count == _MAXTRAILS)
+            if (_TrailsQueue.Count == maximumTrails)
             {
                 // Remove FIFO object from queue and destroy
                 GameObject tmp = _TrailsQueue.Dequeue() as GameObject;
