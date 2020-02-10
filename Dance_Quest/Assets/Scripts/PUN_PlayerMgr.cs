@@ -14,7 +14,7 @@ namespace VirtualNowQuest
         public static GameObject LocalPlayerInstance;
         private const float _MAX_TIME = 2.0f;
         private float _ElapsedTime;
-        private FloorControl _Floor;
+        //private FloorControl _Floor;
 
         // VR Avatar Elements
         [Header("Player Avatar (Displayed to other networked players):")]
@@ -77,7 +77,7 @@ namespace VirtualNowQuest
                 LeftHand.SetActive(true);
                 RightHand.SetActive(true);
 
-                _Floor = GetComponent<FloorControl>();
+                //_Floor = GetComponent<FloorControl>();
             }
 
             // Critical
@@ -106,7 +106,7 @@ namespace VirtualNowQuest
                         _OVRCameraRig.SetActive(false);
                         _OVRLefthand.SetActive(false);
                         _OVRRighthand.SetActive(false);
-                        _Floor.ToggleFloor(false);
+                        //_Floor.ToggleFloor(false);
 
                         PUN_RoomMgr.LeaveRoom();
                     }
